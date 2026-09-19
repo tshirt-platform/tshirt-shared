@@ -88,6 +88,13 @@ function allOrNull<T>(items: unknown[], parse: (v: unknown) => T | null): T[] | 
   return out
 }
 
+/** One id (the original format) or a list; blanks and repeats are dropped, order is kept */
+function parseMockupIds(raw: unknown): string[] {
+  const list = Array.isArray(raw) ? raw : [raw]
+  const ids = list.filter((v): v is string => typeof v === "string" && v !== "")
+  return [...new Set(ids)]
+}
+
 /** Validates untrusted product.metadata.print_config; returns null when unusable */
 export function parsePrintConfig(raw: unknown): PrintConfigMeta | null {
   if (!isRecord(raw)) return null
@@ -107,13 +114,11 @@ export function parsePrintConfig(raw: unknown): PrintConfigMeta | null {
     parsedColors = c
   }
 
-  const parsedMockups: Partial<Record<DesignSide, string>> = {}
+  const parsedMockups: Partial<Record<DesignSide, string[]>> = {}
   if (isRecord(mockups)) {
     for (const side of SIDES) {
-      const id = mockups[side]
-      if (typeof id === "string" && id !== "") {
-        parsedMockups[side as DesignSide] = id
-      }
+      const ids = parseMockupIds(mockups[side])
+      if (ids.length > 0) parsedMockups[side as DesignSide] = ids
     }
   }
 

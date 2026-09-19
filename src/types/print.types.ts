@@ -30,8 +30,8 @@ export interface PrintConfigMeta {
   neck_drop_front_cm: number
   neck_drop_back_cm: number
   colors: GarmentColor[]
-  /** Render-service template id per side */
-  mockups?: Partial<Record<DesignSide, string>>
+  /** Render-service template ids per side: flat lay, on-model shots, ... shown in this order */
+  mockups?: Partial<Record<DesignSide, string[]>>
 }
 
 export interface GarmentMeasurements {
