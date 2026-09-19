@@ -1,6 +1,16 @@
 {
-  "name": "@tshirt/shared",
+  "name": "@tshirt-platform/shared",
   "version": "1.0.0",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tshirt-platform/tshirt-shared.git"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -13,7 +23,9 @@
   },
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch"
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "prepublishOnly": "pnpm build"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +34,7 @@
   "devDependencies": {
     "@types/node": "^25.5.0",
     "tsup": "^8.5.1",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "vitest": "^5.0.1"
   }
 }
