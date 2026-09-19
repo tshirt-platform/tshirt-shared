@@ -23,8 +23,21 @@ describe("parsePrintConfig", () => {
     const parsed = parsePrintConfig(valid)
     expect(parsed?.size_chart).toHaveLength(1)
     expect(parsed?.colors[0].supplier_code).toBeNull()
-    expect(parsed?.mockups).toEqual({ front: "tpl_1" })
+    expect(parsed?.mockups).toEqual({ front: ["tpl_1"] })
     expect(parsed?.shirt_type).toBe("tshirt")
+  })
+
+  it("reads a list of mockups per side, dropping blanks and repeats", () => {
+    const parsed = parsePrintConfig({
+      ...valid,
+      mockups: { front: ["flat", "", "model", "flat", 7], back: ["flat-back"] },
+    })
+    expect(parsed?.mockups).toEqual({ front: ["flat", "model"], back: ["flat-back"] })
+  })
+
+  it("omits a side whose mockups are all unusable", () => {
+    const parsed = parsePrintConfig({ ...valid, mockups: { front: [null, ""], back: 3 } })
+    expect(parsed?.mockups).toEqual({})
   })
 
   it("falls back to default colours when none are given", () => {
