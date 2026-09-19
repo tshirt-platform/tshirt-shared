@@ -1,3 +1,5 @@
+import type { DesignAsset, GarmentSnapshot } from "./print.types"
+
 export type DesignSide = "front" | "back"
 
 export type ShirtType = "tshirt" | "polo" | "hoodie"
@@ -16,6 +18,10 @@ export interface DesignState {
 }
 
 export interface CartLineItemMetadata {
+  /** One entry per printed side */
+  designs: DesignAsset[]
+  garment: GarmentSnapshot
+  /** First design mirrored here for consumers that predate multi-side designs */
   design_png_url: string
   design_json_url: string
   design_side: DesignSide

@@ -1,3 +1,6 @@
 export * from "./types/design.types"
+export * from "./types/print.types"
 export * from "./types/print-order.types"
 export * from "./constants/order.constants"
+export * from "./print/print-area"
+export * from "./print/print-config"

@@ -1,3 +1,4 @@
+import type { PRINT_JOB_STATUSES } from "../constants/order.constants"
 import type { DesignSide, ShirtType } from "./design.types"
 
 export interface PrintShopCustomer {
@@ -23,9 +24,4 @@ export interface PrintShopWebhookPayload {
   created_at: string
 }
 
-export type PrintJobStatus =
-  | "pending"
-  | "printing"
-  | "shipped"
-  | "delivered"
-  | "failed"
+export type PrintJobStatus = (typeof PRINT_JOB_STATUSES)[number]
